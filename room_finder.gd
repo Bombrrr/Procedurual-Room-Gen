@@ -14,6 +14,10 @@ var min_pos: Vector2 = Vector2(0, 0)
 		notify_property_list_changed()
 ##minimum size room can be chosen to be (will be smaller if unable to find a nearby position to expand to)
 @export_range(1, 4) var target_min_room_size: int = 2
+@export var spawn_entrance: bool = true:
+	set(value):
+		spawn_entrance = value
+		notify_property_list_changed()
 ##what wall to place the entrance (has to be on an outer wall of section or will not work, vertical wall has to have the same x coord as the max/min of a given region, horizontal wall has to have the same y axis as the max/ min of a given region)
 @export var entrance_pos: Vector2
 ##h = horizontal wall, v = vertical wall
@@ -39,8 +43,14 @@ func _validate_property(property: Dictionary) -> void:
 	if property.name == "target_min_room_size":
 		property.hint = PROPERTY_HINT_RANGE
 		property.hint_string = "0,%f,0.1" % max_room_size
+	if property.name == "entrance_pos" or property.name == "door_axis":
+		if spawn_entrance:
+			property.usage |= PROPERTY_USAGE_EDITOR
+		else:
+			property.usage &= ~PROPERTY_USAGE_EDITOR
 
 func _ready() -> void:
+	print(entrance_pos)
 	if Engine.is_editor_hint():
 		return
 	find_free_coords()
@@ -128,7 +138,8 @@ func generate_room():
 var selfint = 0
 func spawn_walls():
 	connections.clear()
-	walls[door_axis]["doors"].append(doorpos)
+	if spawn_entrance:
+		walls[door_axis]["doors"].append(doorpos)
 	for i in range(rooms.size()):
 		selfint = i
 		for ii in range(rooms[i].size()):

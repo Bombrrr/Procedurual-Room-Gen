@@ -9,12 +9,13 @@ func _ready() -> void:
 	room_finder.finished_generating.connect(setup)
 
 func setup():
+	var new_pos = (room_finder.doorpos - Vector2(1, 1))*room_finder.wall_size + room_finder.min_pos
 	if room_finder.door_axis == "v":
-		$"..".position.x = room_finder.doorpos.x - 1 + room_finder.min_pos.x/room_finder.wall_size
-		$"..".position.z = room_finder.doorpos.y + 0.5 + room_finder.min_pos.y/room_finder.wall_size
+		$"..".position.x = new_pos.x
+		$"..".position.z = new_pos.y + room_finder.wall_size
 	else:
-		$"..".position.x = room_finder.doorpos.x + 0.5 + room_finder.min_pos.x/room_finder.wall_size
-		$"..".position.z = room_finder.doorpos.y -1 + room_finder.min_pos.y/room_finder.wall_size
+		$"..".position.x = new_pos.x + room_finder.wall_size
+		$"..".position.z = new_pos.y
 	$"../../MiniMap/Panel/SubViewportContainer/SubViewport/Camera2D/Area2D/CollisionShape2D".disabled = false
 
 func _physics_process(delta: float) -> void:

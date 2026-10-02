@@ -53,7 +53,7 @@ sky = SubResource("Sky_r3fl7")
 [node name="RoomFinder" type="Node3D" unique_id=939724818 node_paths=PackedStringArray("top_down_camera", "room_holder")]
 script = ExtResource("1_cn4ip")
 regions = Array[Vector4]([Vector4(5, 6, -10, -5), Vector4(0, 0, -15, -20)])
-entrance_pos = Vector2(-15, -19.76)
+entrance_pos = Vector2(-15, -16.985)
 top_down_camera = NodePath("TopDownCamera")
 room_holder = NodePath("RoomHolder")
 
