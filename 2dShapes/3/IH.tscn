@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dvpdajv0xqxqu"]
+
+[ext_resource type="Texture2D" uid="uid://dlbqynldemj20" path="res://2dShapes/minimap_color.tres" id="1_cmgsk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_snf8b"]
+size = Vector3(2.8, 0.8, 0.27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cmgsk"]
+size = Vector2(2.8, 0.8)
+
+[node name="Node2D" type="Node2D" unique_id=1558422945]
+
+[node name="rotator" type="Node2D" parent="." unique_id=544531629]
+position = Vector2(-1.5, -0.5)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="rotator" unique_id=921051005]
+mesh = SubResource("BoxMesh_snf8b")
+texture = ExtResource("1_cmgsk")
+
+[node name="Area2D" type="Area2D" parent="rotator" unique_id=861989321]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rotator/Area2D" unique_id=1620273950]
+shape = SubResource("RectangleShape2D_cmgsk")

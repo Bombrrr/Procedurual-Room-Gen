@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://ci27ej42i77m2"]
+
+[ext_resource type="Texture2D" uid="uid://dlbqynldemj20" path="res://2dShapes/minimap_color.tres" id="1_xxt6r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_snf8b"]
+size = Vector3(1.8, 0.8, 0.27)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rginj"]
+size = Vector3(0.8, 1.8, 0.27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xxt6r"]
+size = Vector2(1.8, 0.8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m32sl"]
+size = Vector2(0.8, 1.8)
+
+[node name="Node2D" type="Node2D" unique_id=1558422945]
+
+[node name="rotator" type="Node2D" parent="." unique_id=544531629]
+position = Vector2(-1, -1.5)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="rotator" unique_id=921051005]
+mesh = SubResource("BoxMesh_snf8b")
+texture = ExtResource("1_xxt6r")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="rotator" unique_id=1435126433]
+position = Vector2(-0.5, 0.5)
+mesh = SubResource("BoxMesh_rginj")
+texture = ExtResource("1_xxt6r")
+
+[node name="MeshInstance2D3" type="MeshInstance2D" parent="rotator" unique_id=302689278]
+position = Vector2(0.5, -0.5)
+mesh = SubResource("BoxMesh_rginj")
+texture = ExtResource("1_xxt6r")
+
+[node name="Area2D" type="Area2D" parent="rotator" unique_id=1746407653]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="rotator/Area2D" unique_id=1022513697]
+shape = SubResource("RectangleShape2D_xxt6r")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="rotator/Area2D" unique_id=413350979]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_m32sl")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="rotator/Area2D" unique_id=1672241100]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_m32sl")

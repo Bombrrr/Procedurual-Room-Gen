@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://cxa57i4drojjg"]
+
+[ext_resource type="Script" uid="uid://bcnxuryvfjv75" path="res://room_finder.gd" id="1_cn4ip"]
+[ext_resource type="Script" uid="uid://dnbwo5882y6io" path="res://test_player.gd" id="2_m8ocy"]
+[ext_resource type="Script" uid="uid://b005yei3lmd4" path="res://shape_finder.gd" id="3_3tc6w"]
+[ext_resource type="Script" uid="uid://b7pjhtnqy3ujs" path="res://mini_map.gd" id="4_m8ocy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m8ocy"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_bottom_left = 33
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3tc6w"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_bottom_left = 26
+corner_detail = 20
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m8ocy"]
+radius = 5.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a202f"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
+shading_mode = 0
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_noarx"]
+material = SubResource("StandardMaterial3D_noarx")
+size = Vector3(2.605, 2.985, 0.235)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a0tk4"]
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_a202f"]
+size = Vector2(300, 300)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r3fl7"]
+albedo_color = Color(0.25565878, 0.25565878, 0.25565878, 1)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_a202f"]
+data = PackedVector3Array(150, 0, 150, -150, 0, 150, 150, 0, -150, -150, 0, 150, -150, 0, -150, 150, 0, -150)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_a0tk4"]
+
+[sub_resource type="Sky" id="Sky_r3fl7"]
+sky_material = SubResource("ProceduralSkyMaterial_a0tk4")
+
+[sub_resource type="Environment" id="Environment_jka67"]
+background_mode = 2
+sky = SubResource("Sky_r3fl7")
+
+[node name="RoomFinder" type="Node3D" unique_id=939724818 node_paths=PackedStringArray("top_down_camera", "room_holder")]
+script = ExtResource("1_cn4ip")
+regions = Array[Vector4]([Vector4(5, 6, -10, -5), Vector4(0, 0, -15, -20)])
+entrance_pos = Vector2(-15, -19.76)
+top_down_camera = NodePath("TopDownCamera")
+room_holder = NodePath("RoomHolder")
+
+[node name="ShapeFinder" type="Node3D" parent="." unique_id=1942772330 node_paths=PackedStringArray("room_finder")]
+script = ExtResource("3_3tc6w")
+room_finder = NodePath("..")
+shape_folder = "res://Shapes"
+
+[node name="MiniMap" type="CanvasLayer" parent="." unique_id=1063269855 node_paths=PackedStringArray("player", "room_finder", "shape_finder", "shape_holder", "player_area")]
+script = ExtResource("4_m8ocy")
+player = NodePath("../PlayerRoot/CharacterBody3D")
+room_finder = NodePath("..")
+shape_finder = NodePath("../ShapeFinder")
+shape_holder = NodePath("Panel/SubViewportContainer/SubViewport/ShapeHolder")
+player_area = NodePath("Panel/SubViewportContainer/SubViewport/Camera2D/Area2D")
+discovering_map = true
+shape_folder = "res://2dShapes"
+
+[node name="Panel2" type="Panel" parent="MiniMap" unique_id=1380400842]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -310.0
+offset_bottom = 310.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_m8ocy")
+
+[node name="Panel" type="Panel" parent="MiniMap" unique_id=660929436]
+clip_children = 2
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_bottom = 300.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3tc6w")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MiniMap/Panel" unique_id=1894118120]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_bottom = 300.0
+grow_horizontal = 0
+
+[node name="SubViewport" type="SubViewport" parent="MiniMap/Panel/SubViewportContainer" unique_id=1884878832]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(300, 300)
+render_target_update_mode = 4
+
+[node name="ShapeHolder" type="Node2D" parent="MiniMap/Panel/SubViewportContainer/SubViewport" unique_id=2018524653]
+
+[node name="Camera2D" type="Camera2D" parent="MiniMap/Panel/SubViewportContainer/SubViewport" unique_id=1718326138]
+
+[node name="Area2D" type="Area2D" parent="MiniMap/Panel/SubViewportContainer/SubViewport/Camera2D" unique_id=793948103]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MiniMap/Panel/SubViewportContainer/SubViewport/Camera2D/Area2D" unique_id=2088860793]
+shape = SubResource("CircleShape2D_m8ocy")
+disabled = true
+
+[node name="PlayerRoot" type="Node3D" parent="." unique_id=1588479850]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, -6, 0.5, -6)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="PlayerRoot" unique_id=664120679]
+script = ExtResource("2_m8ocy")
+
+[node name="Camera3D" type="Camera3D" parent="PlayerRoot/CharacterBody3D" unique_id=1472040725]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.406, 0)
+cull_mask = 1048573
+current = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerRoot/CharacterBody3D" unique_id=1147095953]
+shape = SubResource("CapsuleShape3D_a202f")
+
+[node name="GreenArrow" type="MeshInstance3D" parent="PlayerRoot/CharacterBody3D" unique_id=1238852082]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 12.478897, 0)
+layers = 2
+cast_shadow = 0
+mesh = SubResource("PrismMesh_noarx")
+
+[node name="ArrowOutline" type="MeshInstance3D" parent="PlayerRoot/CharacterBody3D" unique_id=1445556738]
+transform = Transform3D(1.6, 0, 0, 0, -6.119594e-08, 1, 0, -1.4, -4.371139e-08, 0, 12.372228, 0)
+layers = 2
+cast_shadow = 0
+mesh = SubResource("PrismMesh_noarx")
+surface_material_override/0 = SubResource("StandardMaterial3D_a0tk4")
+
+[node name="RoomHolder" type="Node3D" parent="." unique_id=429583348]
+
+[node name="TopDownCamera" type="Camera3D" parent="." unique_id=2122834638]
+transform = Transform3D(-1, -8.742278e-08, -3.821371e-15, 0, -4.371139e-08, 1, -8.742278e-08, 1, 4.371139e-08, 0, 8, 0)
+projection = 1
+size = 15.0
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=2027374717]
+mesh = SubResource("PlaneMesh_a202f")
+surface_material_override/0 = SubResource("StandardMaterial3D_r3fl7")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor" unique_id=1305230248]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D" unique_id=1190941727]
+shape = SubResource("ConcavePolygonShape3D_a202f")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=547826522]
+environment = SubResource("Environment_jka67")

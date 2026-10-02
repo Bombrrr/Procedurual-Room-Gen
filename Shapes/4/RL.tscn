@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bluftclb1gc3w"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t514x"]
+size = Vector3(0.42, 0.27, 1.42)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x6wes"]
+size = Vector3(0.42, 0.27, 2.42)
+
+[node name="2I" type="Node3D" unique_id=1422076770]
+
+[node name="rotator" type="Node3D" parent="." unique_id=804717248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="rotator" unique_id=613544031]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, -1)
+mesh = SubResource("BoxMesh_t514x")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="rotator" unique_id=827228891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+mesh = SubResource("BoxMesh_x6wes")
